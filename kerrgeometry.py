@@ -2,18 +2,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-# Constants and Parameters
-G = 6.67430e-11  # Gravitational constant
-c = 299792458    # Speed of light
-M = 1.5e30 * 1.5e3 # Mass of the black hole
-a = 1  # Spin parameter
+G = 6.67430e-11  
+c = 299792458    
+M = 1.5e30 * 1.5e3 
+a = 1  
 Rs = 2 * G * M / c**2
 
 theta = np.linspace(0, np.pi / 2, 100)
 phi = np.linspace(0, np.pi, 100)
 theta, phi = np.meshgrid(theta, phi)
 
-# Ergosphere equations
 outer = Rs + np.sqrt(Rs ** 2 - a ** 2)
 inner = Rs - np.sqrt(Rs ** 2 - a ** 2)
 outer_ergo = Rs + np.sqrt(Rs**2 - a**2 * np.cos(theta)**2)
@@ -50,11 +48,7 @@ inner_radius_equatorial = Rs - np.sqrt(Rs**2 - a**2)
 outer_ergo_radius_equatorial = Rs + np.sqrt(Rs**2 - a**2 * np.cos(np.pi / 2)**2)
 inner_ergo_radius_equatorial = Rs - np.sqrt(Rs**2 - a**2 * np.cos(np.pi / 2)**2)
 ring_radius = np.sqrt(Rs**2 - a**2)
-
-# Facteur d'asymétrie
-asymmetry_factor = 0.9  # Modifier ce facteur pour changer l'ovale
-
-# Coordonnées dans le plan équatorial
+asymmetry_factor = 0.9 
 x_outer = outer_radius_equatorial * np.cos(phi_equatorial)
 y_outer = outer_radius_equatorial * np.sin(phi_equatorial) * asymmetry_factor
 x_inner = inner_radius_equatorial * np.cos(phi_equatorial)
@@ -64,7 +58,6 @@ y_outer_ergo = outer_ergo_radius_equatorial * np.sin(phi_equatorial) * asymmetry
 x_inner_ergo = inner_ergo_radius_equatorial * np.cos(phi_equatorial)
 y_inner_ergo = inner_ergo_radius_equatorial * np.sin(phi_equatorial) * asymmetry_factor
 
-# Création du graphique de coupe horizontale
 plt.figure(figsize=(8, 8))
 plt.plot(x_outer, y_outer * 0.5, label='Outer Horizon', color='green')
 plt.plot(x_inner, y_inner, label='Inner Horizon', color='black')
@@ -81,7 +74,6 @@ plt.show()
 fig = plt.figure(figsize=(6, 6))
 ax = fig.add_subplot(111, projection='3d')
 
-# Plot full surfaces
 ax.plot_surface(x_oe, y_oe, z_oe, color='blue', alpha=0.6, label='Outer Ergosphere')
 ax.plot_surface(x_oe, y_oe, -z_oe, color='blue', alpha=0.6)
 ax.plot_surface(x_ie, y_ie, z_ie, color='red', alpha=0.6, label='Inner Ergosphere')
