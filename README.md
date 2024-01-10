@@ -26,12 +26,13 @@ That use Christoffel symbols who's depend of the metric components and have to b
 ```math
 \Gamma{^\alpha_{\beta\mu}} = \frac{1}{2} g^{\sigma\sigma}(\partial_\beta g_{\mu\rho}+\partial_\mu g_{\beta\rho}-\partial_\rho g_{\beta\mu})
 ```
-```math
- \delta R{^\alpha_{\beta\mu\nu}} = \nabla_\mu\delta\Gamma{^\sigma_{\mu\nu}}-\nabla_\mu\Gamma{^\sigma_{\rho\mu}}
-```
 
 Ricci tensor (Riemann contraction) :
 
 ```math
  R_{\mu\nu} = \nabla_\sigma \delta\Gamma{^\sigma_{\mu\nu}} - \nabla_\nu \delta\Gamma{^\sigma_{\nu\sigma}}
+```
+Einstein Tensor (or einstein field solution)
+```math
+   G_{\mu\nu} = R_{\mu\nu} - \frac{1}{2} Rg_{\mu\nu} = 0
 ```
