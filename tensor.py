@@ -141,10 +141,43 @@ def Christoffel():
         print("\n")
         aff(Cristoffel[i])
         print("\n")
+        
+    global Riemann, Riemann_t, Riemann_r, Riemann_o, Riemann_p, Riemann
 
-    return Cristoffel
+    Riemann = [[[[0 for _ in range(4)] for _ in range(4)] for _ in range(4)] for _ in range(4)]
+    Riemann_t = [[[[0 for _ in range(4)] for _ in range(4)] for _ in range(4)] for _ in range(4)]
+    Riemann_r = [[[[0 for _ in range(4)] for _ in range(4)] for _ in range(4)] for _ in range(4)]
+    Riemann_o = [[[[0 for _ in range(4)] for _ in range(4)] for _ in range(4)] for _ in range(4)]
+    Riemann_p = [[[[0 for _ in range(4)] for _ in range(4)] for _ in range(4)] for _ in range(4)]
+
+    print("\u0332".join("Riemann tensor: \n"))
+    for m in range(4):
+        for l in range(4):
+            for i in range(4):
+                for j in range(4):
+                    for k in range(4):
+                        Riemann[i][j][k][l] = sp.diff(Christo[i][j], k[l]) - sp.diff(Christo[i][j], k[l])
+                        if Riemann[i][j][k][l] != 0:
+                            print("R^", i, j, "_", k, l, " = ", Riemann[i][j][k][l])
+                            if m == 0:
+                                Riemann_t[i][j][k][l] = Riemann[i][j][k][l]
+                            if m == 1:
+								Riemann_r[i][j][k][l] = Riemann[i][j][k][l]
+							if m == 2:
+								Riemann_o[i][j][k][l] = Riemann[i][j][k][l]
+							if m == 3:
+								Riemann_p[i][j][k][l] = Riemann[i][j][k][l]
+    
 
 
+    Riemann = [Riemann_t, Riemann_r, Riemann_o, Riemann_p]
+    for i in range(4):
+        print("Riemann for", k[i], ":")
+        print("\n")
+        aff(Riemann[i])
+        print("\n")
+    return Cristoffel, Riemann
+    
 def christoffel_compute(r_value, theta_value, phi_value, t_value, M, G, c):
     global Christo, Christo_t, Christo_r, Christo_o, Christo_p, Christoffel
 
@@ -191,27 +224,6 @@ def christoffel_compute(r_value, theta_value, phi_value, t_value, M, G, c):
     return Christoffel
 
 
-def Riemann_tensor_compute(Christoffel):
-    t, r, theta, phi = sp.symbols('t r theta phi')
-    x = [t, r, theta, phi]
-    R = [[[[0 for _ in range(4)] for _ in range(4)] for _ in range(4)] for _ in range(4)]
-    for i in range(4):
-        for j in range(4):
-            for k in range(4):
-                for l in range(4):
-                    R[i][j][k][l] = sp.diff(Christoffel[i][j][l], x[k]) - sp.diff(Christoffel[i][j][k], x[l])
-    print("\u0332".join("Riemann tensor: \n"))
-    for i in range(4):
-        for j in range(4):
-            for k in range(4):
-                for l in range(4):
-                    if R[i][j][k][l] != 0:
-                        print("R^", i, j, "_", k, l, " = ", R[i][j][k][l])
-    print("\n")
-    print("\u0332".join("Riemann tensor matrix: \n"))
-    print(R)
-    return R
-
 
 G = 6.674e-11
 c = 299792458
@@ -228,7 +240,4 @@ cr1 = christoffel_compute(r, theta, phi, t, M, G, c)
 print("\n")
 print("\u0332".join("Christofell symbols matrix: \n"))
 print(cr1)
-
 print("\n")
-
-R = Riemann_tensor_compute(cr1)
